@@ -16,20 +16,22 @@ CoStar-login problem.
 
 ---
 
-## Fix 1 — Repair the distress feed (highest leverage)
-The scout's #1 seller signal is the **Foreclosure / Distress Monitor** (CRED iQ, 7 AM email:
-lis pendens, CMBS special-servicing, auctions). In testing, only the 5 AM Market Intelligence
-Briefing was found in the inbox — the distress email did not surface.
+## Fix 1 — Repair the distress feed (highest leverage)  ✅ skill drafted: `distress-monitor-co-ut`
+Verified findings:
+- No `Foreclosure & Auction Briefing — CO/UT` email has landed recently (nothing since mid-May) —
+  the old `daily-foreclosure-auction-scan-co-ut` skill **stopped delivering**. Only the 5 AM
+  Market Intelligence Briefing is reliably arriving.
+- That old skill also only scanned auction **websites** — it never covered CMBS special-servicing,
+  watchlists, maturities, or lis pendens (the CRED iQ loan-level signals).
 
-Checklist:
-- [ ] Confirm the Foreclosure/Distress Monitor Cowork skill is **Active** and actually sending
-      to jason.koch@mmgrea.com (check Sent/automation logs, not just the schedule).
-- [ ] Confirm a stable **subject prefix** so the scout can match it (e.g.
-      "Foreclosure & Distress Monitor —"). Record the exact prefix in SKILL.md → Data sources.
-- [ ] Have it attach or link the **CRED iQ export** (CO/UT, apartment, units ≥ ~30) so the scout
-      reads structured loan/maturity/borrower rows, not just prose. Refresh ≤ every 30 days.
-- [ ] Same for the **Competitor New-Listing Monitor** (7:15 AM) — confirm it sends and pin its
-      subject prefix.
+The replacement skill `skills/distress-monitor-co-ut/SKILL.md` fixes both. Remaining wiring:
+- [ ] Deploy `distress-monitor-co-ut` in Cowork (daily 7 AM MT); retire the old skill.
+- [ ] Confirm it actually **sends** to jason.koch@mmgrea.com and **writes the CSV** to
+      `_csv/Distress_CO_UT_YYYY-MM-DD.csv` (check Sent/automation logs, not just the schedule).
+- [ ] Set up the **CRED iQ export** (CO/UT, apartment, units ≥ ~30) on a ≤30-day refresh — weekly
+      preferred — saved to OneDrive so Layer B has structured data.
+- [ ] Subject is pinned to `Distress Monitor — CO/UT — <date>`; the scout matches on it. Do the
+      same (confirm sending + pin subject) for the **Competitor New-Listing Monitor** (7:15 AM).
 
 ## Fix 2 — CSV-ify the master files (removes the 406 blocker)
 The big `.xlsx` masters exceed the file-reader's text-conversion ceiling and return HTTP 406, so

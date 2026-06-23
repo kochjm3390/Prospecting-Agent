@@ -40,7 +40,7 @@ Produce a ranked list of up to **10** opportunities Jason should pursue today:
 ### A. Live event feeds — read EVERY run (these are the daily edge)
 | Feed | Where | Signal it provides |
 |---|---|---|
-| **Foreclosure / Distress Monitor** (CRED iQ, 7 AM) | Outlook email | lis pendens, CMBS special-servicing transfers, auctions → **seller distress (primary)** |
+| **Distress Monitor** (7 AM — see `distress-monitor-co-ut`) | CSV in OneDrive `_csv/Distress_CO_UT_YYYY-MM-DD.csv` + email subject `Distress Monitor — CO/UT — <date>` | lis pendens, CMBS special-servicing transfers, watchlists, near-term maturities, auctions → **seller distress (primary)** |
 | **Competitor New-Listing Monitor** (7:15 AM) | Outlook email | new CO/UT MF listings from M&M, CBRE, W&D, NorthPeak, Pinnacle, JLL → deal velocity **and** other-broker exclusions |
 | **Market Intelligence Briefing** (5 AM) | Outlook email | Treasury/cap markets, CO/UT legislation, macro → submarket momentum + timing context |
 | **CoStar Sale Status-Change Monitor** (1st & 3rd Sun) | OneDrive xlsx | Active / Under-Contract / Sold / **Withdrawn** → withdrawn & expired = re-list targets; UC/Sold = exclude |
